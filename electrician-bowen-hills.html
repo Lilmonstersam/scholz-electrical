@@ -33,8 +33,12 @@
         <div class="header-row-2">
             <div class="nav-container row-2-inner">
                 <a href="index.html" class="logo">
-                    <img src="Images/scholz-electrical-logo.png" alt="Scholz Electrical" style="height:55px;">
+                    <img src="Images/scholz-electrical-logo.png" alt="Scholz Electrical" style="height:70px; transition: height 0.3s ease;">
                 </a>
+                
+                <button class="mobile-menu-toggle" aria-label="Toggle Navigation">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
                 
                 <div class="header-badges-group">
                     <img src="Images/Certification badges/imgi_347_ame-n-300x105.jpeg" alt="Master Electricians" class="h-badge">
@@ -96,7 +100,6 @@
                         </li>
                     </ul>
                 </nav>
-                <a href="#enquiry-section" class="btn-primary header-cta">Book a Job</a>
             </div>
         </div>
     </header>
@@ -125,7 +128,7 @@
     <!-- CRO Social Proof Injection -->
     <div style="background-color: var(--white); padding: 2rem 1.5rem; text-align: center; border-bottom: 1px solid #eee;">
         <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-            <div style="color: #fob900; letter-spacing: 3px; font-size: 1.2rem;">⭐⭐⭐⭐⭐</div>
+            <div style="color: #f0b900; letter-spacing: 3px; font-size: 1.2rem;">⭐⭐⭐⭐⭐</div>
             <p style="font-size: 1.25rem; font-style: italic; color: #333; font-weight: 600;">"100% recommend Scholz Electrical. They are always prompt, polite and so helpful in every job they do for you."</p>
             <p style="font-size: 0.95rem; color: #777;">— Emily Birch, Google Reviews</p>
         </div>
@@ -142,11 +145,7 @@
 <h2>Why Our Customers Love Us</h2>
 <p>Our customers consistently rate us 4.3 stars on Google. They appreciate our punctuality, tidy work habits, and clear communication.</p>
 <p>Experience the difference of a truly professional electrical service. Reach out for a proposal.</p>
-<div class="image-gallery-3col">
-  <img src="Images/Project + electrician images/imgi_464_The-final-product-of-a-5-kilowatt-solar-power-unit-install-in-Indooroopilly-300x225.jpeg" alt="Solar power setup">
-  <img src="Images/Project + electrician images/imgi_234_Scholz_Fig_tree_pocket-300x300.jpeg" alt="Electrician on-site">
-  <img src="Images/Project + electrician images/imgi_197_Chermside.ducted-300x225.jpeg" alt="Air conditioning prep">
-</div>
+<div class="image-gallery-carousel"><img src="Images/Project + electrician images/imgi_464_The-final-product-of-a-5-kilowatt-solar-power-unit-install-in-Indooroopilly-300x225.jpeg" alt="Solar installation"><img src="Images/Project + electrician images/imgi_234_Scholz_Fig_tree_pocket-300x300.jpeg" alt="Electrician on-site"><img src="Images/Project + electrician images/imgi_197_Chermside.ducted-300x225.jpeg" alt="Air conditioning prep"><img src="Images/Project + electrician images/imgi_209_Toowong.Aircon1-300x300.jpeg" alt="AC setup"><img src="Images/Project + electrician images/imgi_308_solar-installation-on-a-roof-300x210.jpeg" alt="Rooftop solar"><img src="Images/Project + electrician images/imgi_259_ARCHERFIELD.LEDs2_-e1657494609814-300x225.jpeg" alt="LED upgrades"></div>
             
             <h2 style="margin-top: 3rem;">Our Comprehensive Electrical Services</h2>
             <div class="services-grid">
@@ -403,8 +402,11 @@
           });
         });
 
-        // Sticky Header Logic
+        // Sticky Header & Scroll Spy Logic
         const header = document.getElementById('main-header');
+        const stickyCta = document.querySelector('.header-cta-scrolled');
+        const enquirySection = document.getElementById('enquiry-section');
+
         window.addEventListener('scroll', () => {
             if (window.scrollY > 200) {
                 header.classList.add('is-scrolled-down');
@@ -412,6 +414,28 @@
                 header.classList.remove('is-scrolled-down');
             }
         }, { passive: true });
+
+        // Hide sticky CTA when looking at the form
+        if (enquirySection && stickyCta) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        header.classList.add('hide-cta');
+                    } else {
+                        header.classList.remove('hide-cta');
+                    }
+                });
+            }, { rootMargin: "0px", threshold: 0.1 });
+            observer.observe(enquirySection);
+        }
+
+        // Mobile Menu Toggle
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                header.classList.toggle('nav-open');
+            });
+        }
 
         // Carousel Logic
         const carousels = document.querySelectorAll('.simple-carousel');
