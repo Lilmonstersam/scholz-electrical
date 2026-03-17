@@ -54,6 +54,9 @@
                         Emergency: 1300 369 633
                     </a>
                 </div>
+                <!-- Desktop CTA: Visible normally, replaced by sticky scroll copy on scroll -->
+                <a href="#enquiry-section" class="btn-primary header-cta-desktop">Book a Job</a>
+                <!-- Scrolled CTA: Hidden initially, shown only on desktop scroll -->
                 <a href="#enquiry-section" class="btn-primary header-cta-scrolled">Book a Job</a>
             </div>
         </div>
@@ -411,7 +414,7 @@
         }, { passive: true });
 
         // Hide sticky CTA when looking at the form
-        if (enquirySection && stickyCta) {
+        if (enquirySection) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -427,8 +430,22 @@
         // Mobile Menu Toggle
         const mobileToggle = document.querySelector('.mobile-menu-toggle');
         if (mobileToggle) {
-            mobileToggle.addEventListener('click', () => {
+            mobileToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
                 header.classList.toggle('nav-open');
+                
+                // Toggle ARIA state
+                const isExpanded = header.classList.contains('nav-open');
+                mobileToggle.setAttribute('aria-expanded', isExpanded);
+            });
+            
+            // Close menu if clicking outside
+            document.addEventListener('click', (e) => {
+                const navRow3 = document.querySelector('.header-row-3');
+                if (header.classList.contains('nav-open') && !mobileToggle.contains(e.target) && (!navRow3 || !navRow3.contains(e.target))) {
+                    header.classList.remove('nav-open');
+                    mobileToggle.setAttribute('aria-expanded', 'false');
+                }
             });
         }
 
