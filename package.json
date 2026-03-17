@@ -1,0 +1,22 @@
+{
+  "name": "scholz-electrical-seo",
+  "version": "1.0.0",
+  "description": "Optimized Local SEO landing pages for Scholz Electrical.",
+  "main": "generate.mjs",
+  "type": "module",
+  "scripts": {
+    "build": "node generate.mjs",
+    "dev": "npx serve .",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [
+    "seo",
+    "local-seo",
+    "landing-pages"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}
